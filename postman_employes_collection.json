@@ -1,0 +1,57 @@
+{
+  "info": {
+    "name": "AutoLoc - Employés (affectation / mutation)",
+    "description": "Scénario : désaffecter un employé de son agence puis l'affecter à une nouvelle agence. Variable baseUrl = http://localhost:8082/autoloc1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8082/autoloc1" },
+    { "key": "idEmploye", "value": "1" },
+    { "key": "idAgenceSfax", "value": "1" },
+    { "key": "idAgenceTunis", "value": "2" }
+  ],
+  "item": [
+    {
+      "name": "1. Lister les agences",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/agences"
+      }
+    },
+    {
+      "name": "2. Lister les employés (état initial)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/employes"
+      }
+    },
+    {
+      "name": "3. Affecter l'employé à Sfax",
+      "request": {
+        "method": "PUT",
+        "url": "{{baseUrl}}/api/employes/affecter/{{idEmploye}}/{{idAgenceSfax}}"
+      }
+    },
+    {
+      "name": "4. Désaffecter l'employé",
+      "request": {
+        "method": "PUT",
+        "url": "{{baseUrl}}/api/employes/desaffecter/{{idEmploye}}"
+      }
+    },
+    {
+      "name": "5. Affecter l'employé à Tunis (mutation)",
+      "request": {
+        "method": "PUT",
+        "url": "{{baseUrl}}/api/employes/affecter/{{idEmploye}}/{{idAgenceTunis}}"
+      }
+    },
+    {
+      "name": "6. Vérifier l'état final",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/employes"
+      }
+    }
+  ]
+}

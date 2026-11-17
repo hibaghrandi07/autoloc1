@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Getter
 @Setter
@@ -21,4 +22,5 @@ public class Maintenance {
     private String description;
     @ManyToOne
     @JoinColumn(name = "vehicule_id")
+    @JsonIgnore
     private Vehicule vehicule;}

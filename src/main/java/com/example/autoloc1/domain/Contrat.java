@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Getter
 @Setter
@@ -22,7 +23,11 @@ public class Contrat {
     private Boolean valide;
     @OneToOne
     @JoinColumn(name = "reservation_id")
-    private Reservation reservation;@OneToMany(mappedBy = "contrat")
-    private List<Paiement> paiements;}
+    @JsonIgnoreProperties({"contrat", "vehicule", "client"})
+    private Reservation reservation;
+    @OneToMany(mappedBy = "contrat")
+    @JsonIgnoreProperties({"contrat"})
+    private List<Paiement> paiements;
+}
 
 

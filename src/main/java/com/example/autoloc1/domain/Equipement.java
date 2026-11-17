@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Getter
 @Setter
@@ -17,5 +18,6 @@ public class Equipement {
     private Long idEquipement;
     private String libelle;
     @ManyToMany(mappedBy = "equipements")
+    @JsonIgnoreProperties({"equipements", "maintenances", "reservations"})
     private List<Vehicule> vehicules;
 }

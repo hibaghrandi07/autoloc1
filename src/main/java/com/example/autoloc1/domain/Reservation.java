@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Getter
 @Setter
@@ -21,9 +22,13 @@ public class Reservation {
     private StatutReservation statut;
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonIgnoreProperties({"reservations"})
     private Client client;
-@ManyToOne
-@JoinColumn(name = "vehicule_id")
-private Vehicule vehicule;
-@OneToOne(mappedBy = "reservation")
-private Contrat contrat;}
+    @ManyToOne
+    @JoinColumn(name = "vehicule_id")
+    @JsonIgnoreProperties({"reservations", "maintenances", "equipements"})
+    private Vehicule vehicule;
+    @OneToOne(mappedBy = "reservation")
+    @JsonIgnoreProperties({"reservation"})
+    private Contrat contrat;
+}

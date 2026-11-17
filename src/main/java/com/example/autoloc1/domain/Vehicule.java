@@ -1,5 +1,5 @@
 package com.example.autoloc1.domain;
-
+import java.util.ArrayList;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "vehicule")
 @Getter
@@ -38,20 +39,29 @@ public class Vehicule {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatutVehicule statut;
+
     @ManyToOne
     @JoinColumn(name = "agence_id")
+    @JsonIgnoreProperties({"employes", "vehicules"})
     private Agence agence;
+
     @OneToMany(mappedBy = "vehicule")
+    @JsonIgnoreProperties({"vehicule"})
     private List<Maintenance> maintenances;
+
     @ManyToMany
     @JoinTable(
             name = "vehicule_equipement",
             joinColumns = @JoinColumn(name = "vehicule_id"),
             inverseJoinColumns = @JoinColumn(name = "equipement_id")
     )
-    private List<Equipement> equipements;
+    @JsonIgnoreProperties({"vehicules"})
+    private List<Equipement> equipements = new ArrayList<>();
+
     @OneToMany(mappedBy = "vehicule")
-    private List<Reservation> reservations;}
+    @JsonIgnoreProperties({"vehicule", "client"})
+    private List<Reservation> reservations;
+}
 
 
 
